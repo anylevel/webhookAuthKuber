@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-prometheus-operator
+  namespace: monitoring
+spec:
+  rules:
+  - host: prometheus.operator.local
+    http:
+      paths:
+        - pathType: Prefix
+          path: /
+          backend:
+            service:
+              name: prometheus-operator-grafana
+              port:
+                number: 80
