@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-phpldapadmin
+  namespace: ldap
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: "ca-issuer"
+spec:
+  tls:
+  - hosts: 
+    - kubernetes.local
+    secretName: root-ca 
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: /phpldapadmin
+        backend:
+          service:
+            name: phpldapadmin
+            port:
+              number: 80
