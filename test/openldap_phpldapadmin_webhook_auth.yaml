@@ -75,7 +75,7 @@ spec:
         - name: PHPLDAPADMIN_HTTPS
           value: "false"
         - name: PHPLDAPADMIN_LDAP_HOSTS
-          value: 10.233.75.31
+          value: 10.233.75.39
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -99,4 +99,4 @@ spec:
           containerPort: 443
         env:
         - name: IP
-          value: 10.233.75.31
+          value: 10.233.75.39
