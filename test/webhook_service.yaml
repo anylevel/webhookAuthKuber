@@ -4,7 +4,6 @@ metadata:
   name: webhook
   namespace: ldap
 spec:
-  type: LoadBalancer
   ports:
   - name: https
     port: 9675
