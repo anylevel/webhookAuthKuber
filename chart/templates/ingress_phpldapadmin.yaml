@@ -2,17 +2,18 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-phpldapadmin
-  namespace: ldap
   annotations:
+    {{if .Values.tls.enabled }}cert-manager.io/cluster-issuer: {{ .Values.tls.issuer}}{{end}}
     kubernetes.io/ingress.class: nginx
-    cert-manager.io/cluster-issuer: "ca-issuer"
 spec:
-  tls:
-  - hosts: 
-    - kubernetes.local
-    secretName: root-ca 
+  defaultBackend:
+    service:
+      name: phpldapadmin
+      port:
+        number: 80
   rules:
-  - http:
+  - host: webhook.{{ .Release.Name }}
+    http:
       paths:
       - pathType: Prefix
         path: /phpldapadmin
@@ -21,3 +22,10 @@ spec:
             name: phpldapadmin
             port:
               number: 80
+  {{if .Values.tls.enabled}}
+  tls:
+  - hosts:
+    - webhook.{{ .Release.Name }}
+    secretName: {{ .Values.tls.secret }} 
+  {{end}}
+
