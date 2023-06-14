@@ -6,7 +6,7 @@ spec:
   type: NodePort
   ports:
   - name: https
-    port: 9675
+    port: {{ .Values.port }}
     targetPort: 443
   selector:
     app: webhook_authorization
