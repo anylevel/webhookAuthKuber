@@ -3,4 +3,11 @@ tls:
   issuer: root-ca
   secret: webhook
 
+namespace: default
+
 port: 9675
+
+ldap:
+  cn: "admin"
+  dc: "dc=mycompany,dc=com"
+  password: "adminpassword"
