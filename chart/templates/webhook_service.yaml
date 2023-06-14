@@ -2,7 +2,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: webhook
-  namespace: ldap
 spec:
   type: NodePort
   ports:
@@ -11,3 +10,30 @@ spec:
     targetPort: 443
   selector:
     app: webhook_authorization
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phpldapadmin
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+  selector:
+    app: phpldapadmin
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: openldap
+spec:
+  ports:
+  - name: openldap-first
+    port: 636
+    targetPort: 636
+  - name: openldap-second
+    port: 389
+    targetPort: 389 
+  selector:
+    app: openldap
