@@ -1,0 +1,5 @@
+apiVersion: v2
+appVersion: "0.0.1"
+description: LDAP Webhook Authorization for Kubernetes
+name: webhook-ldap-authorization
+version: 0.0.1
