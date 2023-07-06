@@ -1,3 +1,7 @@
+images:
+  openldap: osixia/openldap:1.2.3
+  phpldapadmin: osixia/phpldapadmin:0.9.0
+  webhook: vadim46/ldap-webhook:1.0.0
 tls:
   enabled: false
   issuer: root-ca
@@ -9,5 +13,6 @@ port: 9675
 
 ldap:
   cn: "admin"
-  dc: "dc=mycompany,dc=com"
+  dcfirst: "mycompany"
+  dcsecond: "company"
   password: "adminpassword"
