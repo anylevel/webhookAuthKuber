@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: openldap
-        image: osixia/openldap:1.2.3
+        image: {{ .Values.images.openldap }}
         ports:
         - name: ldap389
           containerPort: 389
@@ -23,7 +23,7 @@ spec:
         - name: LDAP_LOG_LEVEL
           value: "256"
         - name: LDAP_DOMAIN
-          value: {{ .Values.ldap.dc }}
+          value: {{ .Values.ldap.dcfirst }}.{{ .Values.ldap.dcsecond }}
         - name: LDAP_ADMIN_PASSWORD
           value: {{ .Values.ldap.password }}
         - name: LDAP_CONFIG_PASSWORD
@@ -60,7 +60,7 @@ spec:
     spec:
       containers:
       - name: phpldapadmin
-        image: osixia/phpldapadmin:0.9.0
+        image: {{ .Values.images.phpldapadmin }} 
         ports:
         - name: http
           containerPort: 80 
@@ -85,18 +85,26 @@ spec:
     spec:
       containers:
       - name: webhook
-        image: vadim46/ldap-webhook:latest
+        image: {{ .Values.images.webhook }} 
+        volumeMounts:
+        - name: tls
+          mountPath: "/keys"
         ports:
         - name: https
           containerPort: 443
         env:
-        - name: DOMAIN
-          value: openldap.{{ .Values.namespace }}.svc.cluster.local
-        - name: CN
-          value: {{ .Values.ldap.cn }}
-        - name: DC
-          value: {{ .Values.ldap.dc }}
-        - name: PASSWORD
+        - name: NAMESPACE
+          value: {{ .Values.namespace }}
+        - name: CNLDAP
+          value: cn={{ .Values.ldap.cn }}
+        - name: DCLDAP
+          value: dc={{ .Values.ldap.dcfirst }},dc={{ .Values.ldap.dcsecond }}
+        - name: LDAPPASSWD
           value: {{ .Values.ldap.password }}
+      volumes:
+      - name: tls
+        secret: 
+          secretName: webhook
 
+  
 
